@@ -1,0 +1,30 @@
+.Note {
+	margin-top: 4rem;
+	display: flex;
+	flex-direction: column;
+	background-color: #333;
+	width: 50%;
+	min-height: 100px;
+	padding: 2.2rem;
+	border-radius: 1.3rem;
+	border: 0.5px white solid;
+}
+
+hr {
+	width: 100%;
+	margin: 1.3rem 0px;
+	align-self: center;
+}
+
+.Note-title {
+	outline: none;
+	color: white;
+	font-size: 1.5rem;
+	margin: 1rem 0;
+}
+
+.Note-title[placeholder]:empty::before {
+	content: attr(placeholder);
+	color: #888;
+	cursor: text;
+}
