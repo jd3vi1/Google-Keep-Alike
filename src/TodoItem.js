@@ -4,9 +4,6 @@ import "./TodoItem.css";
 export class TodoItem extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			title: this.props.data,
-		};
 		this.handleRemove = this.handleRemove.bind(this);
 		this.handleKeyUp = this.handleKeyUp.bind(this);
 		this.handleChange = this.handleChange.bind(this);
@@ -21,13 +18,9 @@ export class TodoItem extends Component {
 			this.props.addTodo();
 			evt.preventDefault();
 			return false;
-		} else if (evt.keyCode === 8 && this.state.title.length === 0) {
+		} else if (evt.keyCode === 8 && this.props.data.length === 0) {
 			this.props.removeTodo(this);
-		}
-		this.setState({
-			title: evt.target.value,
-		});
-		console.log(evt.key);
+		} else this.props.updateData(this, evt.target.value);
 	}
 
 	handleRemove(evt) {
@@ -65,7 +58,7 @@ export class TodoItem extends Component {
 					}
 					onKeyUp={this.handleKeyUp}
 					placeholder="Add Item..."
-					defaultValue={this.state.title}
+					defaultValue={this.props.data}
 				/>
 				<button
 					className={

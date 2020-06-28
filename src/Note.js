@@ -14,6 +14,7 @@ export class Note extends Component {
 		this.addTodo = this.addTodo.bind(this);
 		this.removeTodo = this.removeTodo.bind(this);
 		this.checkTodo = this.checkTodo.bind(this);
+		this.updateData = this.updateData.bind(this);
 		this.handleKeyUp = this.handleKeyUp.bind(this);
 		this.handleKeyDown = this.handleKeyDown.bind(this);
 	}
@@ -50,6 +51,7 @@ export class Note extends Component {
 			addTodo: this.addTodo,
 			removeTodo: this.removeTodo,
 			checkTodo: this.checkTodo,
+			updateData: this.updateData,
 			data: "",
 			isChecked: false,
 			key: unique,
@@ -71,9 +73,19 @@ export class Note extends Component {
 			todos: this.state.todos.map((t) => {
 				if (t.key === todo.props.id) {
 					console.log("We the best music", t, todo);
-
 					t.isChecked = !todo.props.isChecked;
-					t.data = todo.state.title;
+					return t;
+				}
+				return t;
+			}),
+		}));
+	}
+
+	updateData(todo, val) {
+		this.setState(() => ({
+			todos: this.state.todos.map((t) => {
+				if (t.key === todo.props.id) {
+					t.data = val;
 					return t;
 				}
 				return t;
@@ -89,6 +101,7 @@ export class Note extends Component {
 						addTodo={todo.addTodo}
 						removeTodo={todo.removeTodo}
 						checkTodo={todo.checkTodo}
+						updateData={todo.updateData}
 						data={todo.data}
 						isChecked={todo.isChecked}
 						key={todo.key}
@@ -103,6 +116,7 @@ export class Note extends Component {
 						addTodo={todo.addTodo}
 						removeTodo={todo.removeTodo}
 						checkTodo={todo.checkTodo}
+						updateData={todo.updateData}
 						data={todo.data}
 						isChecked={todo.isChecked}
 						key={todo.key}
@@ -120,7 +134,7 @@ export class Note extends Component {
 					onKeyDown={this.handleKeyDown}
 				></div>
 				{todos}
-			<hr/>
+				<hr />
 				{checked}
 			</div>
 		);
