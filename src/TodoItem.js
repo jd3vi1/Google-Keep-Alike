@@ -36,7 +36,13 @@ export class TodoItem extends Component {
 
 	render() {
 		return (
-			<div className="Todo-Item-container">
+			<div
+				className={
+					this.props.isChecked
+						? "Todo-Item-checked Todo-Item-container"
+						: "Todo-Item-container"
+				}
+			>
 				<input
 					type="checkbox"
 					name="chx"
@@ -61,8 +67,12 @@ export class TodoItem extends Component {
 					placeholder="Add Item..."
 					defaultValue={this.state.title}
 				/>
-				{this.state.title.length}
-				<button className="Remove-btn" onClick={this.handleRemove}>
+				<button
+					className={
+						this.props.isChecked ? "Todo-Item-checked Remove-btn" : "Remove-btn"
+					}
+					onClick={this.handleRemove}
+				>
 					x
 				</button>
 			</div>

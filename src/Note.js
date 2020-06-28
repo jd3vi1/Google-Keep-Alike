@@ -15,6 +15,7 @@ export class Note extends Component {
 		this.removeTodo = this.removeTodo.bind(this);
 		this.checkTodo = this.checkTodo.bind(this);
 		this.handleKeyUp = this.handleKeyUp.bind(this);
+		this.handleKeyDown = this.handleKeyDown.bind(this);
 	}
 
 	componentDidMount() {
@@ -28,15 +29,19 @@ export class Note extends Component {
 	}
 
 	handleKeyUp(evt) {
-		console.log(evt.keyCode);
-
-		// if (evt.keyCode === 8) return;
 		if (evt.keyCode === 13) {
 			evt.preventDefault();
 		}
 		this.setState({
 			title: evt.target.innerText,
 		});
+	}
+
+	handleKeyDown(evt) {
+		if (evt.keyCode === 8) return;
+		if (evt.keyCode === 13 || this.state.title.length > 20) {
+			evt.preventDefault();
+		}
 	}
 
 	addTodo(todo) {
@@ -112,10 +117,10 @@ export class Note extends Component {
 					placeholder="Title"
 					contentEditable="true"
 					onKeyUp={this.handleKeyUp}
+					onKeyDown={this.handleKeyDown}
 				></div>
 				{todos}
-				{/* {console.log(this.state.todos)} */}
-				<hr />
+			<hr/>
 				{checked}
 			</div>
 		);
