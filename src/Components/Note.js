@@ -63,10 +63,6 @@ export class Note extends Component {
 	addTodo(todo) {
 		let unique = uuidv4();
 		let newTodoObj = {
-			// addTodo: this.addTodo,
-			// removeTodo: this.removeTodo,
-			// checkTodo: this.checkTodo,
-			// updateData: this.updateData,
 			data: "",
 			isChecked: false,
 			key: unique,
@@ -108,9 +104,9 @@ export class Note extends Component {
 	}
 
 	render() {
-		let todos = this.state.todos.map((todo) => {
+		let todos = this.state.todos.reduce((result, todo) => {
 			if (!todo.isChecked)
-				return (
+				result.push(
 					<TodoItem
 						addTodo={this.addTodo}
 						removeTodo={this.removeTodo}
@@ -122,10 +118,11 @@ export class Note extends Component {
 						id={todo.id}
 					/>
 				);
-		});
-		let checked = this.state.todos.map((todo) => {
+			return result;
+		}, []);
+		let checked = this.state.todos.reduce((result, todo) => {
 			if (todo.isChecked)
-				return (
+				result.push(
 					<TodoItem
 						addTodo={this.addTodo}
 						removeTodo={this.removeTodo}
@@ -137,7 +134,8 @@ export class Note extends Component {
 						id={todo.id}
 					/>
 				);
-		});
+			return result;
+		}, []);
 		return (
 			<div className="Note">
 				<input
