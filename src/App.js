@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Note } from "./Note";
+import { Note } from "./Components/Note";
 
 function App() {
 	return (

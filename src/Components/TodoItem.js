@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./TodoItem.css";
+import "../Styles/TodoItem.css";
 
 export class TodoItem extends Component {
 	constructor(props) {

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 // import { TodoForm } from "./TodoForm";
 import { TodoItem } from "./TodoItem";
 import { v4 as uuidv4 } from "uuid";
-import "./Note.css";
+import "../Styles/Note.css";
 
 export class Note extends Component {
 	constructor(props) {
@@ -20,13 +20,31 @@ export class Note extends Component {
 	}
 
 	componentDidMount() {
-		this.addTodo();
+		const title = localStorage.getItem("title");
+		const todos = JSON.parse(localStorage.getItem("todos"));
+		if (todos === null || title === null) {
+			this.addTodo();
+			this.setState({
+				title: "",
+			});
+		} else {
+			this.setState({
+				title,
+				todos,
+			});
+		}
+		console.log(todos);
 	}
 
 	componentDidUpdate() {
 		if (this.state.todos.filter((todo) => !todo.isChecked).length === 0) {
 			this.addTodo();
 		}
+		const { title, todos } = this.state;
+		localStorage.setItem("title", title);
+		console.log(this);
+
+		localStorage.setItem("todos", JSON.stringify(todos));
 	}
 
 	handleKeyUp(evt) {
@@ -34,7 +52,7 @@ export class Note extends Component {
 			evt.preventDefault();
 		}
 		this.setState({
-			title: evt.target.innerText,
+			title: evt.target.value,
 		});
 	}
 
@@ -48,10 +66,10 @@ export class Note extends Component {
 	addTodo(todo) {
 		let unique = uuidv4();
 		let newTodoObj = {
-			addTodo: this.addTodo,
-			removeTodo: this.removeTodo,
-			checkTodo: this.checkTodo,
-			updateData: this.updateData,
+			// addTodo: this.addTodo,
+			// removeTodo: this.removeTodo,
+			// checkTodo: this.checkTodo,
+			// updateData: this.updateData,
 			data: "",
 			isChecked: false,
 			key: unique,
@@ -98,10 +116,10 @@ export class Note extends Component {
 			if (!todo.isChecked)
 				return (
 					<TodoItem
-						addTodo={todo.addTodo}
-						removeTodo={todo.removeTodo}
-						checkTodo={todo.checkTodo}
-						updateData={todo.updateData}
+						addTodo={this.addTodo}
+						removeTodo={this.removeTodo}
+						checkTodo={this.checkTodo}
+						updateData={this.updateData}
 						data={todo.data}
 						isChecked={todo.isChecked}
 						key={todo.key}
@@ -113,10 +131,10 @@ export class Note extends Component {
 			if (todo.isChecked)
 				return (
 					<TodoItem
-						addTodo={todo.addTodo}
-						removeTodo={todo.removeTodo}
-						checkTodo={todo.checkTodo}
-						updateData={todo.updateData}
+						addTodo={this.addTodo}
+						removeTodo={this.removeTodo}
+						checkTodo={this.checkTodo}
+						updateData={this.updateData}
 						data={todo.data}
 						isChecked={todo.isChecked}
 						key={todo.key}
@@ -126,13 +144,14 @@ export class Note extends Component {
 		});
 		return (
 			<div className="Note">
-				<div
+				<input
+					type="text"
 					className="Note-title"
 					placeholder="Title"
-					contentEditable="true"
 					onKeyUp={this.handleKeyUp}
 					onKeyDown={this.handleKeyDown}
-				></div>
+					defaultValue={this.state.title}
+				/>
 				{todos}
 				<hr />
 				{checked}

@@ -17,6 +17,8 @@ hr {
 }
 
 .Note-title {
+    background-color: transparent;
+    border: none;
 	outline: none;
 	color: white;
 	font-size: 1.8rem;
