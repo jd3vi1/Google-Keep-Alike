@@ -43,13 +43,6 @@ export class TodoItem extends Component {
 					defaultChecked={this.props.isChecked}
 					onChange={this.handleChange}
 				/>
-				{/* <div
-					className="Todo-Item"
-					contentEditable="true"
-					onKeyDown={this.handleKeyUp}
-					placeholder="Add Item"
-
-				></div> */}
 				<input
 					type="text"
 					autoFocus

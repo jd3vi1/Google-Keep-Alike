@@ -33,7 +33,6 @@ export class Note extends Component {
 				todos,
 			});
 		}
-		console.log(todos);
 	}
 
 	componentDidUpdate() {
@@ -42,8 +41,6 @@ export class Note extends Component {
 		}
 		const { title, todos } = this.state;
 		localStorage.setItem("title", title);
-		console.log(this);
-
 		localStorage.setItem("todos", JSON.stringify(todos));
 	}
 
@@ -90,7 +87,6 @@ export class Note extends Component {
 		this.setState(() => ({
 			todos: this.state.todos.map((t) => {
 				if (t.key === todo.props.id) {
-					console.log("We the best music", t, todo);
 					t.isChecked = !todo.props.isChecked;
 					return t;
 				}
