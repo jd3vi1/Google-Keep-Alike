@@ -4,6 +4,7 @@ import { TodoItem } from "./TodoItem";
 import { v4 as uuidv4 } from "uuid";
 import "../Styles/Note.css";
 
+// The todo note container component which contains all the todos
 export class Note extends Component {
 	constructor(props) {
 		super(props);
@@ -19,6 +20,7 @@ export class Note extends Component {
 		this.handleKeyDown = this.handleKeyDown.bind(this);
 	}
 
+	// when components mounts, look for todos data in localStorage and initializes state
 	componentDidMount() {
 		const title = localStorage.getItem("title");
 		const todos = JSON.parse(localStorage.getItem("todos"));
@@ -35,15 +37,19 @@ export class Note extends Component {
 		}
 	}
 
+	// when CRUD operation is performed on todo
 	componentDidUpdate() {
+		// maintain at least one empty todo at all times
 		if (this.state.todos.filter((todo) => !todo.isChecked).length === 0) {
 			this.addTodo();
 		}
+		// update the localStorage
 		const { title, todos } = this.state;
 		localStorage.setItem("title", title);
 		localStorage.setItem("todos", JSON.stringify(todos));
 	}
 
+	// event handler for the title of note
 	handleKeyUp(evt) {
 		if (evt.keyCode === 13) {
 			evt.preventDefault();
@@ -53,6 +59,7 @@ export class Note extends Component {
 		});
 	}
 
+	// restricting the title size
 	handleKeyDown(evt) {
 		if (evt.keyCode === 8) return;
 		if (evt.keyCode === 13 || this.state.title.length > 20) {
@@ -60,6 +67,7 @@ export class Note extends Component {
 		}
 	}
 
+	// event handler for adding a todo to the state
 	addTodo(todo) {
 		let unique = uuidv4();
 		let newTodoObj = {
@@ -73,12 +81,14 @@ export class Note extends Component {
 		}));
 	}
 
+	// event handler for removing a todo from the state
 	removeTodo(todo) {
 		this.setState(() => ({
 			todos: this.state.todos.filter((t) => t.key !== todo.props.id),
 		}));
 	}
 
+	// event handler for checking/unchecking a todo
 	checkTodo(todo) {
 		this.setState(() => ({
 			todos: this.state.todos.map((t) => {
@@ -91,6 +101,7 @@ export class Note extends Component {
 		}));
 	}
 
+	// event handler for updating the data inside a todo
 	updateData(todo, val) {
 		this.setState(() => ({
 			todos: this.state.todos.map((t) => {
@@ -104,6 +115,7 @@ export class Note extends Component {
 	}
 
 	render() {
+		// generating unchecked todos
 		let todos = this.state.todos.reduce((result, todo) => {
 			if (!todo.isChecked)
 				result.push(
@@ -120,6 +132,8 @@ export class Note extends Component {
 				);
 			return result;
 		}, []);
+
+		// generating checked todos
 		let checked = this.state.todos.reduce((result, todo) => {
 			if (todo.isChecked)
 				result.push(

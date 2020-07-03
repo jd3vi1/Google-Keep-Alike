@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../Styles/TodoItem.css";
 
+// todo component consisting of a checkbox, input box, and delete button
 export class TodoItem extends Component {
 	constructor(props) {
 		super(props);
@@ -13,7 +14,9 @@ export class TodoItem extends Component {
 		this.props.checkTodo(this);
 	}
 
+	// event handler for todo input box
 	handleKeyUp(evt) {
+		// add a new todo on pressing enter, if inside unchecked todos
 		if (evt.keyCode === 13 && !this.props.isChecked) {
 			this.props.addTodo();
 			evt.preventDefault();
@@ -23,6 +26,7 @@ export class TodoItem extends Component {
 		} else this.props.updateData(this, evt.target.value);
 	}
 
+	// event handler for remove button
 	handleRemove(evt) {
 		this.props.removeTodo(this);
 	}
